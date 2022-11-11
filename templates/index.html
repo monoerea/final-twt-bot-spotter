@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+  <head>
+    <meta charset="UTF-8">
+    <title>ML API</title>
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+
+  </head>
+
+  <body>
+    <div class="login">
+      <h1>Flower Class Prediction</h1>
+      <div id="result"></div>
+      <form name="myForm" id="myForm" action="{{ url_for('predict')}}" method="post">
+        <input type="hidden" name="1" id="1" value="Sepal_Length"  />
+        <input type="hidden" name="2" id="2" value="Sepal_Width"  />
+        <button type="button" onclick="clearLocalStorage()">Click Me!</button>
+      </form>
+      <script>
+        // Check browser support
+        function clearLocalStorage(){
+          location.reload();
+          localStorage.clear();
+        }
+
+        if (typeof(Storage) !== "undefined") {
+          // Store
+          localStorage.setItem("firstname", "Bryan");
+          localStorage.setItem("lastname", "Ferrer");
+        } else {
+          document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+        }
+        if(localStorage.getItem("loaded") === null ){
+          let test=localStorage.getItem('firstname');
+          let test1=localStorage.getItem('lastname');
+          document.getElementById("1").value=test;
+          document.getElementById("2").value=test1;
+          console.log(document.getElementById("1").value)
+          console.log(document.getElementById("2").value)
+          localStorage.setItem("loaded", 1);
+          document.forms["myForm"].submit();
+        }else{
+          console.log("already loaded")
+          //add button to reload
+        }
+
+
+        /*
+        // Check browser support
+        if (typeof(Storage) !== "undefined") {
+          // Store
+          localStorage.setItem("firstname", "Bryan");
+          localStorage.setItem("lastname", "Ferrer");
+          
+          // Retrieve
+        } else {
+          document.getElementById("result").innerHTML = "Sorry, your browser does not support Web Storage...";
+        }
+        //let test=localStorage.getItem('firstname');
+        //let test1=localStorage.getItem('lastname');
+        //let data=JSON.stringify([test,test1])
+        tempdata=JSON.stringify({"firstname": localStorage.getItem('firstname'),"lastname":localStorage.getItem('lastname')})
+        const request = new XMLHttpRequest();
+        request.open("POST",'/predict');
+        request.send(tempdata);*/
+      </script>
+      <p>{{ result_here }}</p>
+
+    
+  </body>
+</html>
